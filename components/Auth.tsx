@@ -5,67 +5,19 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "@/utils/firebase";
+import { useMutateAuth } from "@/hooks/useMutateAuth";
 
 export const Auth = () => {
   const [isLogin, setIsLogin] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const signUpEmail = async () => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      setEmail("");
-      setPassword("");
-      return user;
-    } catch (err: any) {
-      const errorCode = err.code;
-      const errorMessage = err.message;
-      alert(errorMessage);
-      setEmail("");
-      setPassword("");
-      return;
-    }
-  };
-
-  const loginEmail = async () => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      // Signed in
-      const user = userCredential.user;
-      setEmail("");
-      setPassword("");
-      return user;
-    } catch (err: any) {
-      const errorCode = err.code;
-      const errorMessage = err.message;
-      alert(errorMessage);
-      setEmail("");
-      setPassword("");
-      return;
-    }
-  };
-  const logout = () => {
-    auth.signOut();
-  };
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log(user);
-      } else {
-      }
-    });
-  }, []);
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    loginEmail,
+    signUpEmail,
+    logout,
+  } = useMutateAuth();
 
   return (
     <div>
