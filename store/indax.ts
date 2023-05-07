@@ -8,6 +8,7 @@ type State = {
   setUser: (user: User | null) => void;
   editedPost: EditedPost;
   updateEditedPost: (payload: EditedPost) => void;
+  deleteEditedPost: (payload: string) => void;
   resetEditedPost: () => void;
 };
 
@@ -15,8 +16,8 @@ const useStore = create<State>((set) => ({
   user: null,
   setUser: (user) => set({ user }),
   editedPost: {
+    id: "",
     fished_at: "",
-    fished_time: "",
     place: "",
     imgUrl: "",
     size: "",
@@ -29,8 +30,8 @@ const useStore = create<State>((set) => ({
   updateEditedPost: (payload) =>
     set({
       editedPost: {
+        id: payload.id,
         fished_at: payload.fished_at,
-        fished_time: payload.fished_time,
         place: payload.place,
         imgUrl: payload.imgUrl,
         size: payload.size,
@@ -41,11 +42,26 @@ const useStore = create<State>((set) => ({
         rig: payload.rig,
       },
     }),
+  deleteEditedPost: (payload) =>
+    set({
+      editedPost: {
+        id: payload,
+        fished_at: "",
+        place: "",
+        imgUrl: "",
+        size: "",
+        lure: "",
+        reel: "",
+        rod: "",
+        line: "",
+        rig: "",
+      },
+    }),
   resetEditedPost: () =>
     set({
       editedPost: {
+        id: "",
         fished_at: "",
-        fished_time: "",
         place: "",
         imgUrl: "",
         size: "",

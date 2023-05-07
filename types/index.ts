@@ -1,8 +1,8 @@
 export type Post = {
+  id: string;
   user_id: string | undefined;
   timestamp: any;
   fished_at: string;
-  fished_time: string;
   place: string;
   imgUrl: string;
   size: string;
@@ -13,8 +13,8 @@ export type Post = {
   rig: string;
 };
 export type EditedPost = {
+  id: string;
   fished_at: string;
-  fished_time: string;
   place: string;
   imgUrl: string;
   size: string;
