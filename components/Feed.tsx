@@ -36,7 +36,7 @@ const Feed: FC = () => {
   const handleModalClose = useCallback(() => {
     close();
   }, [close]);
-  console.log("レンダリング");
+  // console.log("レンダリング");
 
   if (isLoading) {
     return <div>Loading...</div>;

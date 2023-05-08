@@ -1,5 +1,6 @@
 import useStore from "@/store/indax";
 import { Post } from "@/types";
+import Image from "next/image";
 import { FC, memo } from "react";
 
 type Props = {
@@ -36,7 +37,16 @@ export const PostItemMemo: FC<Props> = ({
 
   return (
     <div className="">
-      <div className="">{imgUrl}</div>
+      {imgUrl && (
+        <div className="">
+          <Image
+            src={imgUrl}
+            width={200}
+            height={200}
+            alt={`${fished_at}の釣果`}
+          />
+        </div>
+      )}
       <div className="bg-white p-4 shadow-sm rounded">
         <dl className="flex items-center gap-3">
           <dt className="font-bold">日付</dt>

@@ -1,4 +1,5 @@
 import { useMutatePost } from "@/hooks/useMutatePost";
+import { useUploadPostImg } from "@/hooks/useUploadPostImg";
 import useStore from "@/store/indax";
 import { FC, memo } from "react";
 type Props = {
@@ -7,11 +8,23 @@ type Props = {
 
 export const PostFormMemo: FC<Props> = ({ closeModal }) => {
   const { createPostMutation, updatePostMutation } = useMutatePost();
+  const { useMutateUploadPostImg } = useUploadPostImg();
   const editedPost = useStore((state) => state.editedPost);
   const update = useStore((state) => state.updateEditedPost);
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = async (e: {
+    target: {
+      files: any;
+      name: string;
+      value: any;
+    };
+  }) => {
     const { name, value } = e.target;
     update({ ...editedPost, [name]: value });
+    if (e.target.files[0]) {
+      const imgUrl = await useMutateUploadPostImg(e.target.files[0]);
+      update({ ...editedPost, imgUrl });
+    }
+    console.log(editedPost);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,14 +66,15 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
       </div>
       <div className="flex gap-6 items-center">
         <label className="font-bold" htmlFor="imgUrl">
-          Image URL:
+          画像
         </label>
         <input
-          type="text"
+          type="file"
+          accept="image/*"
           id="imgUrl"
           name="imgUrl"
           onChange={handleChange}
-          value={editedPost.imgUrl}
+          // value={editedPost.imgUrl}
         />
       </div>
       <div className="flex gap-6 items-center">
