@@ -1,4 +1,4 @@
-import { EditedPost } from "@/types";
+import { EditedPost, EditedProfile } from "@/types";
 import firebase from "firebase/app";
 import { create } from "zustand";
 import { User } from "firebase/auth";
@@ -6,7 +6,10 @@ import { User } from "firebase/auth";
 type State = {
   user: User | null;
   setUser: (user: User | null) => void;
+  editedProfile: EditedProfile;
   editedPost: EditedPost;
+  updateEditedProfile: (payload: EditedProfile) => void;
+  resetEditedProfile: () => void;
   updateEditedPost: (payload: EditedPost) => void;
   deleteEditedPost: (payload: string) => void;
   resetEditedPost: () => void;
@@ -15,6 +18,27 @@ type State = {
 const useStore = create<State>((set) => ({
   user: null,
   setUser: (user) => set({ user }),
+  editedProfile: {
+    username: "",
+    avatar_url: "",
+    description: "",
+  },
+  updateEditedProfile: (payload) =>
+    set({
+      editedProfile: {
+        username: payload.username,
+        avatar_url: payload.avatar_url,
+        description: payload.description,
+      },
+    }),
+  resetEditedProfile: () =>
+    set({
+      editedProfile: {
+        username: "",
+        avatar_url: "",
+        description: "",
+      },
+    }),
   editedPost: {
     id: "",
     fished_at: "",

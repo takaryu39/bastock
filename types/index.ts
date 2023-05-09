@@ -24,3 +24,14 @@ export type EditedPost = {
   line: string;
   rig: string;
 };
+export type Profile = {
+  id: string;
+  username: string | undefined;
+  avatar_url: string | undefined;
+  description: string | undefined;
+};
+export type EditedProfile = {
+  username: string | undefined;
+  avatar_url: string | undefined;
+  description: string | undefined;
+};

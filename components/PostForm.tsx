@@ -20,7 +20,9 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
   }) => {
     const { name, value } = e.target;
     update({ ...editedPost, [name]: value });
-    if (e.target.files[0]) {
+    console.log(e.target.files);
+
+    if (e.target.files) {
       const imgUrl = await useMutateUploadPostImg(e.target.files[0]);
       update({ ...editedPost, imgUrl });
     }

@@ -9,10 +9,11 @@ import useStore from "@/store/indax";
 import Feed from "@/components/Feed";
 import { ErrorBoundary } from "react-error-boundary";
 import { Spinner } from "@/components/Spinner";
+import { NextPage } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+const Home: NextPage = () => {
   const session = useStore((state) => state.user);
   const setSession = useStore((state) => state.setUser);
   useEffect(() => {
@@ -39,4 +40,5 @@ export default function Home() {
       )}
     </Layout>
   );
-}
+};
+export default Home;

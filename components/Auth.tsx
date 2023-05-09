@@ -8,7 +8,6 @@ import { auth } from "@/utils/firebase";
 import { useMutateAuth } from "@/hooks/useMutateAuth";
 
 export const Auth = () => {
-  const [isLogin, setIsLogin] = useState(false);
   const {
     email,
     setEmail,
@@ -18,7 +17,6 @@ export const Auth = () => {
     signUpEmail,
     logout,
   } = useMutateAuth();
-
   return (
     <div>
       <div className="flex items-center gap-4">

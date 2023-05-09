@@ -1,6 +1,6 @@
 import { useMutateAuth } from "@/hooks/useMutateAuth";
 import { useQueryPosts } from "@/hooks/useQueryPosts";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { useSubscribe } from "@/hooks/useSubscribe";
 import { ModalLayout } from "./ModalLayout";
 import { useModal } from "react-hooks-use-modal";
@@ -9,35 +9,25 @@ import { DeletePostModalLayout } from "./DeletePostModalLayout";
 import { PostForm } from "./PostForm";
 import useStore from "@/store/indax";
 import { useMutatePost } from "@/hooks/useMutatePost";
+import { useModals } from "@/hooks/useModals";
+import { useMutateProfile } from "@/hooks/useMutateProfile";
 const Feed: FC = () => {
   const editedPost = useStore((state) => state.editedPost);
   const { logout } = useMutateAuth();
   const { deletePostMutation } = useMutatePost();
   useSubscribe();
+  const {
+    Modal,
+    DeletePostModal,
+    open,
+    close,
+    handleModalOpen,
+    handleModalClose,
+    handleDeletePostModalOpen,
+    deletePostModalClose,
+  } = useModals();
+
   const { data: posts, isLoading, isError } = useQueryPosts();
-
-  const [Modal, open, close, isOpen] = useModal("root", {
-    preventScroll: true,
-  });
-  const [DeletePostModal, deletePostModalOpen, deletePostModalClose] = useModal(
-    "root",
-    {
-      preventScroll: true,
-    }
-  );
-
-  const handleDeletePostModalOpen = useCallback(() => {
-    deletePostModalOpen();
-  }, [deletePostModalOpen]);
-
-  const handleModalOpen = useCallback(() => {
-    open();
-  }, [open]);
-  const handleModalClose = useCallback(() => {
-    close();
-  }, [close]);
-  // console.log("レンダリング");
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -45,6 +35,9 @@ const Feed: FC = () => {
     return <div>Error occurred while fetching posts</div>;
   }
 
+  useEffect(() => {
+    console.log("レンダリング");
+  }, []);
   return (
     <>
       <button onClick={logout}>ログアウトする</button>

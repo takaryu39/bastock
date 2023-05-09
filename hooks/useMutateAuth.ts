@@ -4,6 +4,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useState } from "react";
+import { useQueryClient } from "react-query";
+import { useMutateProfile } from "./useMutateProfile";
 
 export const useMutateAuth = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +14,8 @@ export const useMutateAuth = () => {
     setEmail("");
     setPassword("");
   };
+  const { createProfile } = useMutateProfile();
+  const queryClient = useQueryClient();
   const signUpEmail = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -20,10 +24,10 @@ export const useMutateAuth = () => {
         password
       );
       const user = userCredential.user;
+      createProfile(user.uid);
       reset();
       return user;
     } catch (err: any) {
-      const errorCode = err.code;
       const errorMessage = err.message;
       alert(errorMessage);
       reset();
@@ -51,6 +55,7 @@ export const useMutateAuth = () => {
   };
   const logout = () => {
     auth.signOut();
+    queryClient.removeQueries("posts");
   };
   return {
     email,
