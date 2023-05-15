@@ -1,7 +1,6 @@
 import useStore from "@/store/indax";
 import { EditedProfile, Profile } from "@/types";
 import { db } from "@/utils/firebase";
-import { updateProfile } from "firebase/auth";
 import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
 
 export const useMutateProfile = () => {
@@ -9,11 +8,11 @@ export const useMutateProfile = () => {
   const reset = useStore((state) => state.resetEditedProfile);
   // const updateProfile = useStore((state)=>state.updateEditedProfile)
   //ログインしたユーザーのidを渡す
-  const createProfile = async (user_id: string) => {
+  const createProfileMutation = async (user_id: string) => {
     try {
       const profileRef = doc(collection(db, "profiles"));
       await setDoc(profileRef, {
-        id: user_id,
+        user_id: user_id,
         username: "",
         avatar_url: "",
         description: "",
@@ -25,7 +24,7 @@ export const useMutateProfile = () => {
       reset();
     }
   };
-  const updateProfile = async (profile: Profile) => {
+  const updateProfileMutation = async (profile: EditedProfile) => {
     try {
       const newRef = doc(db, "profiles", profile.id);
       await updateDoc(newRef, {
@@ -41,7 +40,7 @@ export const useMutateProfile = () => {
   };
 
   return {
-    createProfile,
-    updateProfile,
+    createProfileMutation,
+    updateProfileMutation,
   };
 };

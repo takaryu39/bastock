@@ -1,10 +1,3 @@
-import { FormEvent, useEffect, useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "@/utils/firebase";
 import { useMutateAuth } from "@/hooks/useMutateAuth";
 
 export const Auth = () => {

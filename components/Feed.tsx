@@ -1,6 +1,6 @@
 import { useMutateAuth } from "@/hooks/useMutateAuth";
 import { useQueryPosts } from "@/hooks/useQueryPosts";
-import { FC, useCallback, useEffect } from "react";
+import { FC, Suspense, useCallback, useEffect } from "react";
 import { useSubscribe } from "@/hooks/useSubscribe";
 import { ModalLayout } from "./ModalLayout";
 import { useModal } from "react-hooks-use-modal";
@@ -11,6 +11,9 @@ import useStore from "@/store/indax";
 import { useMutatePost } from "@/hooks/useMutatePost";
 import { useModals } from "@/hooks/useModals";
 import { useMutateProfile } from "@/hooks/useMutateProfile";
+import { Spinner } from "./Spinner";
+import { Profile } from "./Profile";
+import { ErrorBoundary } from "react-error-boundary";
 const Feed: FC = () => {
   const editedPost = useStore((state) => state.editedPost);
   const { logout } = useMutateAuth();
@@ -29,17 +32,16 @@ const Feed: FC = () => {
 
   const { data: posts, isLoading, isError } = useQueryPosts();
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isError) {
-    return <div>Error occurred while fetching posts</div>;
+    return <div>投稿を取得することができませんでした。</div>;
   }
 
-  useEffect(() => {
-    console.log("レンダリング");
-  }, []);
+  console.log("レンダリング");
   return (
     <>
+      <Profile />
       <button onClick={logout}>ログアウトする</button>
       <button
         onClick={() => {

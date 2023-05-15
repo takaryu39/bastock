@@ -1,7 +1,7 @@
 import { useMutatePost } from "@/hooks/useMutatePost";
 import { useUploadPostImg } from "@/hooks/useUploadPostImg";
 import useStore from "@/store/indax";
-import { FC, memo } from "react";
+import { ChangeEvent, FC, memo } from "react";
 type Props = {
   closeModal: () => void;
 };
@@ -11,16 +11,9 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
   const { useMutateUploadPostImg } = useUploadPostImg();
   const editedPost = useStore((state) => state.editedPost);
   const update = useStore((state) => state.updateEditedPost);
-  const handleChange = async (e: {
-    target: {
-      files: any;
-      name: string;
-      value: any;
-    };
-  }) => {
+  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     update({ ...editedPost, [name]: value });
-    console.log(e.target.files);
 
     if (e.target.files) {
       const imgUrl = await useMutateUploadPostImg(e.target.files[0]);

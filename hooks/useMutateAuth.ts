@@ -14,7 +14,7 @@ export const useMutateAuth = () => {
     setEmail("");
     setPassword("");
   };
-  const { createProfile } = useMutateProfile();
+  const { createProfileMutation } = useMutateProfile();
   const queryClient = useQueryClient();
   const signUpEmail = async () => {
     try {
@@ -24,7 +24,7 @@ export const useMutateAuth = () => {
         password
       );
       const user = userCredential.user;
-      createProfile(user.uid);
+      createProfileMutation(user.uid);
       reset();
       return user;
     } catch (err: any) {
@@ -46,7 +46,6 @@ export const useMutateAuth = () => {
       reset();
       return user;
     } catch (err: any) {
-      const errorCode = err.code;
       const errorMessage = err.message;
       alert(errorMessage);
       reset();
@@ -56,6 +55,7 @@ export const useMutateAuth = () => {
   const logout = () => {
     auth.signOut();
     queryClient.removeQueries("posts");
+    queryClient.removeQueries("profile");
   };
   return {
     email,

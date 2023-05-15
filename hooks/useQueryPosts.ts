@@ -15,7 +15,9 @@ export const useQueryPosts = () => {
 
     return postsArray;
   };
-  return useQuery("posts", getPosts, {
+  return useQuery({
+    queryKey: ["posts"],
+    queryFn: getPosts,
     staleTime: Infinity,
   });
 };

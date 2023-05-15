@@ -1,7 +1,5 @@
-import useStore from "@/store/indax";
 import { storage } from "@/utils/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { ChangeEvent } from "react";
 
 export const useUploadPostImg = () => {
   //写真が登録されたら実行

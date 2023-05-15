@@ -41,10 +41,10 @@ export const useMutatePost = () => {
       reset();
     }
   };
+  1;
   const updatePostMutation = async (post: EditedPost) => {
     try {
       const newRef = doc(db, "posts", post.id);
-      console.log(post.id);
 
       await updateDoc(newRef, {
         fished_at: post.fished_at,

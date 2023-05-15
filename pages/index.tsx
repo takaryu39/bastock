@@ -20,10 +20,8 @@ const Home: NextPage = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setSession(user);
-        console.log(user);
       } else {
         setSession(user);
-        console.log("ログアウト");
       }
     });
   }, [setSession]);

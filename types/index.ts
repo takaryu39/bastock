@@ -26,12 +26,14 @@ export type EditedPost = {
 };
 export type Profile = {
   id: string;
-  username: string | undefined;
-  avatar_url: string | undefined;
-  description: string | undefined;
+  user_id: string;
+  username: string;
+  avatar_url: string;
+  description: string;
 };
 export type EditedProfile = {
-  username: string | undefined;
-  avatar_url: string | undefined;
-  description: string | undefined;
+  id: string;
+  username: string;
+  avatar_url: string;
+  description: string;
 };

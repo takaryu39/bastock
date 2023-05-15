@@ -19,6 +19,7 @@ const useStore = create<State>((set) => ({
   user: null,
   setUser: (user) => set({ user }),
   editedProfile: {
+    id: "",
     username: "",
     avatar_url: "",
     description: "",
@@ -26,6 +27,7 @@ const useStore = create<State>((set) => ({
   updateEditedProfile: (payload) =>
     set({
       editedProfile: {
+        id: payload.id,
         username: payload.username,
         avatar_url: payload.avatar_url,
         description: payload.description,
@@ -34,6 +36,7 @@ const useStore = create<State>((set) => ({
   resetEditedProfile: () =>
     set({
       editedProfile: {
+        id: "",
         username: "",
         avatar_url: "",
         description: "",
