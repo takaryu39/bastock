@@ -7,11 +7,12 @@ type ProfileData = Omit<Profile, "id">;
 
 export const useQueryProfile = () => {
   const session = useStore((state) => state.user);
+  const update = useStore((state) => state.updateEditedProfile);
   const userId = session?.uid;
   const getProfile = async () => {
     const querySnapshot = await getDocs(collection(db, "profiles"));
     const profileData = querySnapshot.docs.find(
-      (doc) => userId && userId === doc.data().user_id
+      (doc) => userId === doc.data().user_id
     );
     const profile = profileData
       ? { id: profileData.id, ...(profileData.data() as ProfileData) }
@@ -21,5 +22,15 @@ export const useQueryProfile = () => {
   };
   return useQuery("profile", getProfile, {
     staleTime: Infinity,
+    onSuccess: (profile) => {
+      if (profile) {
+        update({
+          id: profile.id,
+          username: profile.username,
+          avatar_url: profile.avatar_url,
+          description: profile.description,
+        });
+      }
+    },
   });
 };

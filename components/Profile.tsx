@@ -1,12 +1,13 @@
 import { useQueryProfile } from "@/hooks/useQueryProfile";
 import { ChangeEvent, FC, FormEvent } from "react";
 import { Spinner } from "./Spinner";
-import { UserCircleIcon } from "@heroicons/react/solid";
+import { PencilAltIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { useModals } from "@/hooks/useModals";
 import { ModalLayout } from "./ModalLayout";
 import useStore from "@/store/indax";
 import { useUploadAvatarImg } from "@/hooks/useUploadAvatarImg";
 import { useMutateProfile } from "@/hooks/useMutateProfile";
+import Image from "next/image";
 
 export const Profile: FC = () => {
   const { data: profile, isLoading, isError } = useQueryProfile();
@@ -35,30 +36,49 @@ export const Profile: FC = () => {
   };
   const handleSubmitProfile = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    updateProfileMutation(editedProfile);
   };
-
   return (
     <>
       <button
         onClick={() => {
-          handleModalOpen;
-          // update({
-          //   id: profile.id,
-          //   username: profile.username,
-          //   avatar_url: profile.avatar_url,
-          //   description: profile.description,
-          // });
+          handleModalOpen();
         }}
       >
-        <UserCircleIcon className="h-10 w-10 text-gray-500" />
+        {editedProfile.avatar_url ? (
+          <Image
+            src={editedProfile.avatar_url}
+            alt="avatar"
+            width={50}
+            height={50}
+            className="rounded-full"
+          />
+        ) : (
+          <UserCircleIcon className="h-50 w-50 text-gray-500" />
+        )}
       </button>
-
       <Modal>
         <ModalLayout closeModal={handleModalClose}>
           <form onSubmit={handleSubmitProfile}>
             <div className="">
               <label htmlFor="avatarImg">
-                <UserCircleIcon className="h-10 w-10 text-gray-500" />
+                {editedProfile.avatar_url ? (
+                  <div className="relative inline-block cursor-pointer">
+                    <Image
+                      src={editedProfile.avatar_url}
+                      alt="avatar"
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
+                    <PencilAltIcon className="h-5 w-5 text-blue-600 absolute bottom-0 right-0" />
+                  </div>
+                ) : (
+                  <div className="relative inline-block cursor-pointer">
+                    <UserCircleIcon className="h-50 w-50 text-gray-500" />
+                    <PencilAltIcon className="h-5 w-5 text-blue-600 absolute bottom-0 right-0" />
+                  </div>
+                )}
               </label>
               <input
                 type="file"

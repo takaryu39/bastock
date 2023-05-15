@@ -33,7 +33,7 @@ export type Profile = {
 };
 export type EditedProfile = {
   id: string;
-  username: string;
-  avatar_url: string;
-  description: string;
+  username: string | undefined;
+  avatar_url: string | undefined;
+  description: string | undefined;
 };

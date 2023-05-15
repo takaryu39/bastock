@@ -32,10 +32,10 @@ export const useMutateProfile = () => {
         avatar_url: profile.avatar_url,
         description: profile.description,
       });
-      reset();
+      // reset();
     } catch (error: any) {
       alert("更新に失敗しました。もう一度更新してください。");
-      reset();
+      // reset();
     }
   };
 

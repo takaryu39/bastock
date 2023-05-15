@@ -6,6 +6,7 @@ import {
 import { useState } from "react";
 import { useQueryClient } from "react-query";
 import { useMutateProfile } from "./useMutateProfile";
+import useStore from "@/store/indax";
 
 export const useMutateAuth = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export const useMutateAuth = () => {
     setEmail("");
     setPassword("");
   };
+  const resetProfile = useStore((state) => state.resetEditedProfile);
   const { createProfileMutation } = useMutateProfile();
   const queryClient = useQueryClient();
   const signUpEmail = async () => {
@@ -54,6 +56,7 @@ export const useMutateAuth = () => {
   };
   const logout = () => {
     auth.signOut();
+    resetProfile();
     queryClient.removeQueries("posts");
     queryClient.removeQueries("profile");
   };
