@@ -1,19 +1,16 @@
 import { useMutateAuth } from "@/hooks/useMutateAuth";
 import { useQueryPosts } from "@/hooks/useQueryPosts";
-import { FC, Suspense, useCallback, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useSubscribe } from "@/hooks/useSubscribe";
 import { ModalLayout } from "./ModalLayout";
-import { useModal } from "react-hooks-use-modal";
 import { PostItem } from "./PostItem";
 import { DeletePostModalLayout } from "./DeletePostModalLayout";
 import { PostForm } from "./PostForm";
 import useStore from "@/store/indax";
 import { useMutatePost } from "@/hooks/useMutatePost";
 import { useModals } from "@/hooks/useModals";
-import { useMutateProfile } from "@/hooks/useMutateProfile";
 import { Spinner } from "./Spinner";
 import { Profile } from "./Profile";
-import { ErrorBoundary } from "react-error-boundary";
 const Feed: FC = () => {
   const editedPost = useStore((state) => state.editedPost);
   const { logout } = useMutateAuth();
@@ -23,7 +20,6 @@ const Feed: FC = () => {
     Modal,
     DeletePostModal,
     open,
-    close,
     handleModalOpen,
     handleModalClose,
     handleDeletePostModalOpen,
@@ -38,7 +34,10 @@ const Feed: FC = () => {
     return <div>投稿を取得することができませんでした。</div>;
   }
 
-  console.log("レンダリング");
+  console.log("render");
+  useEffect(() => {
+    console.log("再レンダリング");
+  }, [editedPost]);
   return (
     <>
       <Profile />
@@ -88,6 +87,7 @@ const Feed: FC = () => {
             rod={post.rod}
             line={post.line}
             rig={post.rig}
+            user_id={post.user_id}
             openModal={handleModalOpen}
             deletePostModalOpen={handleDeletePostModalOpen}
           />

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import { Layout } from "@/components/Layout";
 import { Auth } from "@/components/Auth";
@@ -7,11 +6,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/utils/firebase";
 import useStore from "@/store/indax";
 import Feed from "@/components/Feed";
-import { ErrorBoundary } from "react-error-boundary";
 import { Spinner } from "@/components/Spinner";
 import { NextPage } from "next";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const Home: NextPage = () => {
   const session = useStore((state) => state.user);
@@ -28,11 +24,9 @@ const Home: NextPage = () => {
   return (
     <Layout title="Home">
       {session ? (
-        <ErrorBoundary fallback={<Spinner />}>
-          <Suspense fallback={<Spinner />}>
-            <Feed />
-          </Suspense>
-        </ErrorBoundary>
+        <Suspense fallback={<Spinner />}>
+          <Feed />
+        </Suspense>
       ) : (
         <Auth />
       )}

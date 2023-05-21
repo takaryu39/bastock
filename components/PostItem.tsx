@@ -1,7 +1,10 @@
+import { useDownloadAvatarImg } from "@/hooks/useDownloadAvatarImg";
 import useStore from "@/store/indax";
 import { Post } from "@/types";
 import Image from "next/image";
 import { FC, memo } from "react";
+import { Spinner } from "./Spinner";
+import { UserCircleIcon } from "@heroicons/react/solid";
 
 type Props = {
   id: string;
@@ -14,7 +17,7 @@ type Props = {
   rod: string;
   line: string;
   rig: string;
-
+  user_id: string;
   openModal: () => void;
   deletePostModalOpen: () => void;
 };
@@ -29,14 +32,29 @@ export const PostItemMemo: FC<Props> = ({
   rod,
   line,
   rig,
+  user_id,
   openModal,
   deletePostModalOpen,
 }) => {
   const update = useStore((state) => state.updateEditedPost);
   const deletePost = useStore((state) => state.deleteEditedPost);
+  const { isLoading, avatar_url } = useDownloadAvatarImg(user_id);
 
   return (
     <div className="">
+      {isLoading ? (
+        <Spinner />
+      ) : avatar_url ? (
+        <Image
+          src={avatar_url}
+          width={40}
+          height={40}
+          alt="avatar"
+          className="rounded-full"
+        />
+      ) : (
+        <UserCircleIcon className="w-10 h-10 text-gray-500" />
+      )}
       {imgUrl && (
         <div className="">
           <Image
@@ -47,6 +65,7 @@ export const PostItemMemo: FC<Props> = ({
           />
         </div>
       )}
+      <div className="w-4 h-4 rounded-full"></div>
       <div className="bg-white p-4 shadow-sm rounded">
         <dl className="flex items-center gap-3">
           <dt className="font-bold">日付</dt>

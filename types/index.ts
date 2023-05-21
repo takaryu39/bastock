@@ -1,6 +1,6 @@
 export type Post = {
   id: string;
-  user_id: string | undefined;
+  user_id: string;
   timestamp: any;
   fished_at: string;
   place: string;
