@@ -8,7 +8,7 @@ type Props = {
 
 export const PostFormMemo: FC<Props> = ({ closeModal }) => {
   const { createPostMutation, updatePostMutation } = useMutatePost();
-  const { useMutateUploadPostImg } = useUploadPostImg();
+  const { mutateUploadPostImg } = useUploadPostImg();
   const editedPost = useStore((state) => state.editedPost);
   const update = useStore((state) => state.updateEditedPost);
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +16,7 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
     update({ ...editedPost, [name]: value });
 
     if (e.target.files) {
-      const imgUrl = await useMutateUploadPostImg(e.target.files[0]);
+      const imgUrl = await mutateUploadPostImg(e.target.files[0]);
       update({ ...editedPost, imgUrl });
     }
     console.log(editedPost);

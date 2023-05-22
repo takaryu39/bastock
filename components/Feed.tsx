@@ -34,10 +34,6 @@ const Feed: FC = () => {
     return <div>投稿を取得することができませんでした。</div>;
   }
 
-  console.log("render");
-  useEffect(() => {
-    console.log("再レンダリング");
-  }, [editedPost]);
   return (
     <>
       <Profile />

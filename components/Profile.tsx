@@ -10,18 +10,10 @@ import { useMutateProfile } from "@/hooks/useMutateProfile";
 import Image from "next/image";
 
 export const Profile: FC = () => {
-  const { data: profile, isLoading, isError } = useQueryProfile();
-  if (isLoading) {
-    return <Spinner />;
-  }
-  if (isError) {
-    return <div>Error occurred while fetching profile</div>;
-  }
-  const session = useStore((state) => state.user);
   const update = useStore((state) => state.updateEditedProfile);
   const editedProfile = useStore((state) => state.editedProfile);
   const { Modal, handleModalOpen, handleModalClose } = useModals();
-  const { useMutateUploadAvatarImg } = useUploadAvatarImg();
+  const { mutateUploadAvatarImg } = useUploadAvatarImg();
   const { updateProfileMutation } = useMutateProfile();
 
   const handleChangeProfile = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,15 +21,24 @@ export const Profile: FC = () => {
     update({ ...editedProfile, [name]: value });
 
     if (e.target.files) {
-      const imgUrl = await useMutateUploadAvatarImg(e.target.files[0]);
+      const imgUrl = await mutateUploadAvatarImg(e.target.files[0]);
       update({ ...editedProfile, avatar_url: imgUrl });
     }
     console.log(editedProfile);
   };
+
   const handleSubmitProfile = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     updateProfileMutation(editedProfile);
   };
+
+  const { isLoading, isError } = useQueryProfile();
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (isError) {
+    return <div>Error occurred while fetching profile</div>;
+  }
   return (
     <>
       <button

@@ -1,6 +1,5 @@
 import { useDownloadAvatarImg } from "@/hooks/useDownloadAvatarImg";
 import useStore from "@/store/indax";
-import { Post } from "@/types";
 import Image from "next/image";
 import { FC, memo } from "react";
 import { Spinner } from "./Spinner";
