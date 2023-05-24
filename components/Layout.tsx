@@ -11,9 +11,11 @@ export const Layout: FC<Props> = ({ children, title = "Bastock" }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <header></header>
-      <main>{children}</main>
-      <footer></footer>
+      <div className="flex-col h-screen flex">
+        <header></header>
+        <main>{children}</main>
+        <footer></footer>
+      </div>
     </>
   );
 };

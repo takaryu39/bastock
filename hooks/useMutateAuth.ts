@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useQueryClient } from "react-query";
 import { useMutateProfile } from "./useMutateProfile";
 import useStore from "@/store/indax";
+import { async } from "@firebase/util";
 
 export const useMutateAuth = () => {
   const [email, setEmail] = useState("");
@@ -16,8 +17,11 @@ export const useMutateAuth = () => {
     setPassword("");
   };
   const resetProfile = useStore((state) => state.resetEditedProfile);
+  const resetPost = useStore((state) => state.resetEditedPost);
+
   const { createProfileMutation } = useMutateProfile();
   const queryClient = useQueryClient();
+
   const signUpEmail = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -54,11 +58,16 @@ export const useMutateAuth = () => {
       return;
     }
   };
-  const logout = () => {
-    auth.signOut();
-    resetProfile();
-    queryClient.removeQueries("posts");
-    queryClient.removeQueries("profile");
+  const logout = async () => {
+    try {
+      await auth.signOut();
+      resetPost();
+      resetProfile();
+      queryClient.removeQueries("posts");
+      queryClient.removeQueries("profile");
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
   return {
     email,

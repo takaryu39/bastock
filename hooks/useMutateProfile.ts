@@ -1,5 +1,5 @@
 import useStore from "@/store/indax";
-import { EditedProfile, Profile } from "@/types";
+import { EditedProfile } from "@/types";
 import { db } from "@/utils/firebase";
 import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
 

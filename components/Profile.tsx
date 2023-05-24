@@ -24,7 +24,6 @@ export const Profile: FC = () => {
       const imgUrl = await mutateUploadAvatarImg(e.target.files[0]);
       update({ ...editedProfile, avatar_url: imgUrl });
     }
-    console.log(editedProfile);
   };
 
   const handleSubmitProfile = (e: FormEvent<HTMLFormElement>) => {
@@ -32,13 +31,6 @@ export const Profile: FC = () => {
     updateProfileMutation(editedProfile);
   };
 
-  const { isLoading, isError } = useQueryProfile();
-  if (isLoading) {
-    return <Spinner />;
-  }
-  if (isError) {
-    return <div>Error occurred while fetching profile</div>;
-  }
   return (
     <>
       <button

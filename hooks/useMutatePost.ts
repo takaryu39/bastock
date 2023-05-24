@@ -1,9 +1,7 @@
 import useStore from "@/store/indax";
 import { EditedPost, Post } from "@/types";
 import { db } from "@/utils/firebase";
-import { log } from "console";
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
