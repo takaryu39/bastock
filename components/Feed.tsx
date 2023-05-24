@@ -1,6 +1,6 @@
 import { useMutateAuth } from "@/hooks/useMutateAuth";
 import { useQueryPosts } from "@/hooks/useQueryPosts";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useSubscribe } from "@/hooks/useSubscribe";
 import { ModalLayout } from "./ModalLayout";
 import { PostItem } from "./PostItem";
@@ -11,6 +11,7 @@ import { useMutatePost } from "@/hooks/useMutatePost";
 import { useModals } from "@/hooks/useModals";
 import { Spinner } from "./Spinner";
 import { Profile } from "./Profile";
+import { useQueryProfile } from "@/hooks/useQueryProfile";
 const Feed: FC = () => {
   const editedPost = useStore((state) => state.editedPost);
   const { logout } = useMutateAuth();
@@ -33,10 +34,11 @@ const Feed: FC = () => {
   if (isError) {
     return <div>投稿を取得することができませんでした。</div>;
   }
+  const { data: profile } = useQueryProfile();
 
   return (
     <>
-      <Profile />
+      {profile && <Profile />}
       <button onClick={logout}>ログアウトする</button>
       <button
         onClick={() => {
