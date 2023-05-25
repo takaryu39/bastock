@@ -52,7 +52,7 @@ export const PostItemMemo: FC<Props> = ({
             width={200}
             height={200}
             alt={`${fished_at}の釣果`}
-            className="w-full h-full  object-cover"
+            className="w-auto h-full  object-cover m-auto"
           />
           <div className="absolute bottom-1 left-1">
             {isLoading ? (
