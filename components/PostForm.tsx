@@ -33,9 +33,9 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="flex gap-6 items-center">
-        <label className="font-bold" htmlFor="fished_at">
+    <form onSubmit={handleSubmit} className="w-10/12 m-auto">
+      <div className="flex gap-6 items-center mt-10">
+        <label className="font-bold w-1/5" htmlFor="fished_at">
           日付
         </label>
         <input
@@ -44,10 +44,11 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
           name="fished_at"
           onChange={handleChange}
           value={editedPost.fished_at}
+          className="my-1 rounded border border-zinc-400 w-full px-3 py-2 text-sm focus:outline-none"
         />
       </div>
       <div className="flex gap-6 items-center">
-        <label className="font-bold" htmlFor="place">
+        <label className="font-bold w-1/5" htmlFor="place">
           場所
         </label>
         <input
@@ -56,11 +57,11 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
           name="place"
           onChange={handleChange}
           value={editedPost.place}
-          className="my-1 rounded border border-gray-300 px-3 py-2 text-smfocus:outline-none flex"
+          className="my-1 rounded border border-zinc-400 w-full px-3 py-2 text-sm focus:outline-none flex"
         />
       </div>
       <div className="flex gap-6 items-center">
-        <label className="font-bold" htmlFor="imgUrl">
+        <label className="font-bold w-1/5" htmlFor="imgUrl">
           画像
         </label>
         <input
@@ -70,10 +71,11 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
           name="imgUrl"
           onChange={handleChange}
           // value={editedPost.imgUrl}
+          className="my-1 rounded border border-zinc-400 w-full px-3 py-2 text-sm focus:outline-none"
         />
       </div>
       <div className="flex gap-6 items-center">
-        <label className="font-bold" htmlFor="size">
+        <label className="font-bold w-1/5" htmlFor="size">
           重さ・長さ
         </label>
         <input
@@ -82,11 +84,11 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
           name="size"
           onChange={handleChange}
           value={editedPost.size}
-          className="my-1 rounded border border-gray-300 px-3 py-2 text-smfocus:outline-none flex"
+          className="my-1 rounded border border-zinc-400 w-full px-3 py-2 text-sm focus:outline-none flex"
         />
       </div>
       <div className="flex gap-6 items-center">
-        <label className="font-bold" htmlFor="lure">
+        <label className="font-bold w-1/5" htmlFor="lure">
           ルアー
         </label>
         <input
@@ -95,11 +97,11 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
           name="lure"
           onChange={handleChange}
           value={editedPost.lure}
-          className="my-1 rounded border border-gray-300 px-3 py-2 text-smfocus:outline-none flex"
+          className="my-1 rounded border border-zinc-400 w-full px-3 py-2 text-sm focus:outline-none flex"
         />
       </div>
       <div className="flex gap-6 items-center">
-        <label className="font-bold" htmlFor="reel">
+        <label className="font-bold w-1/5" htmlFor="reel">
           リール
         </label>
         <input
@@ -108,11 +110,11 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
           name="reel"
           onChange={handleChange}
           value={editedPost.reel}
-          className="my-1 rounded border border-gray-300 px-3 py-2 text-smfocus:outline-none flex"
+          className="my-1 rounded border border-zinc-400 w-full px-3 py-2 text-sm focus:outline-none flex"
         />
       </div>
       <div className="flex gap-6 items-center">
-        <label className="font-bold" htmlFor="rod">
+        <label className="font-bold w-1/5" htmlFor="rod">
           ロッド
         </label>
         <input
@@ -121,11 +123,11 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
           name="rod"
           onChange={handleChange}
           value={editedPost.rod}
-          className="my-1 rounded border border-gray-300 px-3 py-2 text-smfocus:outline-none flex"
+          className="my-1 rounded border border-zinc-400 w-full px-3 py-2 text-sm focus:outline-none flex"
         />
       </div>
       <div className="flex gap-6 items-center">
-        <label className="font-bold" htmlFor="line">
+        <label className="font-bold w-1/5" htmlFor="line">
           ライン
         </label>
         <input
@@ -134,11 +136,11 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
           name="line"
           onChange={handleChange}
           value={editedPost.line}
-          className="my-1 rounded border border-gray-300 px-3 py-2 text-smfocus:outline-none flex"
+          className="my-1 rounded border border-zinc-400 w-full px-3 py-2 text-sm focus:outline-none flex"
         />
       </div>
       <div className="flex gap-6 items-center">
-        <label className="font-bold" htmlFor="rig">
+        <label className="font-bold w-1/5" htmlFor="rig">
           リグ
         </label>
         <input
@@ -147,10 +149,15 @@ export const PostFormMemo: FC<Props> = ({ closeModal }) => {
           name="rig"
           onChange={handleChange}
           value={editedPost.rig}
-          className="my-1 rounded border border-gray-300 px-3 py-2 text-smfocus:outline-none flex"
+          className="my-1 rounded border border-zinc-400 w-full px-3 py-2 text-sm focus:outline-none flex"
         />
       </div>
-      <button type="submit">{!editedPost.id ? "投稿" : "更新"}</button>
+      <button
+        type="submit"
+        className="flex items-center justify-center w-52 px-4 py-2 m-auto mt-5  bg-main-color text-white font-bold text-sm transition-all border border-transparent rounded-md shadow-sm hover:opacity-60"
+      >
+        {!editedPost.id ? "投稿する" : "更新する"}
+      </button>
     </form>
   );
 };

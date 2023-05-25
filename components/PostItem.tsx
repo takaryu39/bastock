@@ -3,7 +3,11 @@ import useStore from "@/store/indax";
 import Image from "next/image";
 import { FC, memo } from "react";
 import { Spinner } from "./Spinner";
-import { UserCircleIcon } from "@heroicons/react/solid";
+import {
+  PencilAltIcon,
+  TrashIcon,
+  UserCircleIcon,
+} from "@heroicons/react/solid";
 
 type Props = {
   id: string;
@@ -40,97 +44,93 @@ export const PostItemMemo: FC<Props> = ({
   const { isLoading, avatar_url } = useDownloadAvatarImg(user_id);
 
   return (
-    <div className="">
-      {isLoading ? (
-        <Spinner />
-      ) : avatar_url ? (
-        <Image
-          src={avatar_url}
-          width={40}
-          height={40}
-          alt="avatar"
-          className="rounded-full"
-        />
-      ) : (
-        <UserCircleIcon className="w-10 h-10 text-gray-500" />
-      )}
+    <div className="shadow">
       {imgUrl && (
-        <div className="">
+        <div className="w-full aspect-image relative ">
           <Image
             src={imgUrl}
             width={200}
             height={200}
             alt={`${fished_at}の釣果`}
+            className="w-full h-full  object-cover"
           />
+          <div className="absolute bottom-1 left-1">
+            {isLoading ? (
+              <Spinner />
+            ) : avatar_url ? (
+              <Image
+                src={avatar_url}
+                width={30}
+                height={30}
+                alt="avatar"
+                className="rounded-full"
+              />
+            ) : (
+              <UserCircleIcon className="w-8 h-8 text-zinc-400" />
+            )}
+          </div>
         </div>
       )}
-      <div className="w-4 h-4 rounded-full"></div>
-      <div className="bg-white p-4 shadow-sm rounded">
-        <dl className="flex items-center gap-3">
-          <dt className="font-bold">日付</dt>
-          <dd>{fished_at}</dd>
+      <div className="bg-white p-4  rounded">
+        <span className="text-sm text-zinc-400">{fished_at}</span>
+        <p className="font-bold">{place}</p>
+        <p className="font-bold mt-2">{size}</p>
+        <p className="font-bold mt-2">タックル</p>
+        <dl className="flex items-center">
+          <dt className="font-bold text-xs  w-1/5">ルアー</dt>
+          <dd className="text-xs">{lure}</dd>
         </dl>
-        <dl className="flex items-center gap-3">
-          <dt className="font-bold">場所</dt>
-          <dd>{place}</dd>
+        <dl className="flex items-center">
+          <dt className="font-bold text-xs  w-1/5">ロッド</dt>
+          <dd className="text-xs">{rod}</dd>
         </dl>
-        <dl className="flex items-center gap-3">
-          <dt className="font-bold">重さ・長さ</dt>
-          <dd>{size}</dd>
+        <dl className="flex items-center">
+          <dt className="font-bold text-xs  w-1/5">リール</dt>
+          <dd className="text-xs">{reel}</dd>
         </dl>
-        <dl className="flex items-center gap-3">
-          <dt className="font-bold">ルアー</dt>
-          <dd>{lure}</dd>
+        <dl className="flex items-center">
+          <dt className="font-bold text-xs  w-1/5">ライン</dt>
+          <dd className="text-xs">{line}</dd>
         </dl>
-        <dl className="flex items-center gap-3">
-          <dt className="font-bold">ロッド</dt>
-          <dd>{rod}</dd>
+        <dl className="flex items-center">
+          <dt className="font-bold text-xs  w-1/5">ルアー</dt>
+          <dd className="text-xs">{lure}</dd>
         </dl>
-        <dl className="flex items-center gap-3">
-          <dt className="font-bold">リール</dt>
-          <dd>{reel}</dd>
+        <dl className="flex items-center">
+          <dt className="font-bold text-xs  w-1/5">リグ</dt>
+          <dd className="text-xs">{rig}</dd>
         </dl>
-        <dl className="flex items-center gap-3">
-          <dt className="font-bold">ライン</dt>
-          <dd>{line}</dd>
-        </dl>
-        <dl className="flex items-center gap-3">
-          <dt className="font-bold">ルアー</dt>
-          <dd>{lure}</dd>
-        </dl>
-        <dl className="flex items-center gap-3">
-          <dt className="font-bold">リグ</dt>
-          <dd>{rig}</dd>
-        </dl>
-        <button
-          onClick={() => {
-            update({
-              id: id,
-              fished_at: fished_at,
-              place: place,
-              imgUrl: imgUrl,
-              size: size,
-              lure: lure,
-              reel: reel,
-              rod: rod,
-              line: line,
-              rig: rig,
-            });
+        <div className="flex gap-2 items-center mt-2 justify-end">
+          <button
+            onClick={() => {
+              update({
+                id: id,
+                fished_at: fished_at,
+                place: place,
+                imgUrl: imgUrl,
+                size: size,
+                lure: lure,
+                reel: reel,
+                rod: rod,
+                line: line,
+                rig: rig,
+              });
 
-            openModal();
-            // console.log(editedPost);
-          }}
-        >
-          編集する
-        </button>
-        <button
-          onClick={() => {
-            deletePost(id);
-            deletePostModalOpen();
-          }}
-        >
-          削除する
-        </button>
+              openModal();
+              // console.log(editedPost);
+            }}
+          >
+            <PencilAltIcon className="w-5 h-5 text-main-color" />
+          </button>
+          <button
+            onClick={() => {
+              deletePost(id);
+              deletePostModalOpen();
+            }}
+          >
+            <TrashIcon className="w-5 h-5 text-main-color" />
+          </button>
+        </div>
       </div>
     </div>
   );

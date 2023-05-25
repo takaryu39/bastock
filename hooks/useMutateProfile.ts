@@ -33,6 +33,7 @@ export const useMutateProfile = () => {
         description: profile.description,
       });
       // reset();
+      alert("プロフィールを更新しました");
     } catch (error: any) {
       alert("更新に失敗しました。もう一度更新してください。");
       // reset();

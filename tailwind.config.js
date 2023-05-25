@@ -18,6 +18,9 @@ module.exports = {
         "light-gray": "#f5f5f5",
         gray: "#D0D0D0",
       },
+      aspectRatio: {
+        image: "3/2",
+      },
     },
   },
   plugins: [],

@@ -1,5 +1,7 @@
 import Head from "next/head";
 import { FC, ReactNode } from "react";
+import Header from "./Header";
+import Container from "./Container";
 
 type Props = {
   title: string;
@@ -12,8 +14,10 @@ export const Layout: FC<Props> = ({ children, title = "Bastock" }) => {
         <title>{title}</title>
       </Head>
       <div className="flex-col h-screen flex">
-        <header></header>
-        <main>{children}</main>
+        <Header />
+        <main>
+          <Container>{children}</Container>
+        </main>
         <footer></footer>
       </div>
     </>

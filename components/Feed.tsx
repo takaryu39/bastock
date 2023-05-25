@@ -1,4 +1,3 @@
-import { useMutateAuth } from "@/hooks/useMutateAuth";
 import { useQueryPosts } from "@/hooks/useQueryPosts";
 import { FC } from "react";
 import { useSubscribe } from "@/hooks/useSubscribe";
@@ -10,11 +9,10 @@ import useStore from "@/store/indax";
 import { useMutatePost } from "@/hooks/useMutatePost";
 import { useModals } from "@/hooks/useModals";
 import { Spinner } from "./Spinner";
-import { Profile } from "./Profile";
+import { PlusIcon } from "@heroicons/react/solid";
 import { useQueryProfile } from "@/hooks/useQueryProfile";
 const Feed: FC = () => {
   const editedPost = useStore((state) => state.editedPost);
-  const { logout } = useMutateAuth();
   const { deletePostMutation } = useMutatePost();
   useSubscribe();
   const {
@@ -27,6 +25,7 @@ const Feed: FC = () => {
     deletePostModalClose,
   } = useModals();
 
+  useQueryProfile();
   const { data: posts, isLoading, isError } = useQueryPosts();
   if (isLoading) {
     return <Spinner />;
@@ -34,36 +33,41 @@ const Feed: FC = () => {
   if (isError) {
     return <div>投稿を取得することができませんでした。</div>;
   }
-  const { data: profile } = useQueryProfile();
 
   return (
     <>
-      {profile && <Profile />}
-      <button onClick={logout}>ログアウトする</button>
       <button
         onClick={() => {
           open();
         }}
+        className="fixed bottom-5 right-5 flex items-center justify-center gap-2 w-48 px-4 py-2  bg-main-color transition-all border border-transparent rounded-md shadow-sm hover:opacity-60"
       >
-        釣果を投稿する
+        <PlusIcon className="w-4 h-4 text-white" />
+        <span className="text-white text-sm">釣果を投稿する</span>
       </button>
 
       <Modal>
-        <ModalLayout closeModal={handleModalClose}>
+        <ModalLayout closeModal={handleModalClose} title="釣果を編集する">
           <PostForm closeModal={handleModalClose} />
         </ModalLayout>
       </Modal>
 
       <DeletePostModal>
         <DeletePostModalLayout>
-          <p>この投稿を削除しますか？</p>
-          <div className="">
-            <button onClick={() => deletePostModalClose()}>キャンセル</button>
+          <p className="font-bold text-center ">この投稿を削除しますか？</p>
+          <div className="flex justify-center gap-4 mt-4">
+            <button
+              onClick={() => deletePostModalClose()}
+              className="flex items-center justify-center gap-2 w-48 px-4 py-2  bg-white text-main-color transition-all border border-main-color rounded-md shadow-sm hover:opacity-60"
+            >
+              キャンセル
+            </button>
             <button
               onClick={() => {
                 deletePostMutation(editedPost.id);
                 deletePostModalClose();
               }}
+              className="flex items-center justify-center gap-2 w-48 px-4 py-2  bg-main-color transition-all text-white border border-transparent rounded-md shadow-sm hover:opacity-60"
             >
               削除
             </button>
@@ -71,7 +75,7 @@ const Feed: FC = () => {
         </DeletePostModalLayout>
       </DeletePostModal>
 
-      <div>
+      <div className="grid grid-cols-3 gap-8 ">
         {posts?.map((post) => (
           <PostItem
             key={post.id}
